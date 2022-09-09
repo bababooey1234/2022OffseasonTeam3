@@ -103,6 +103,8 @@ public class Robot extends TimedRobot implements Executable, LogHelper {
         subsystems.createPneumatics(); // Must be called before createDrivebase if using solenoids.
         subsystems.createDrivebase();
         subsystems.createLocation();
+        subsystems.createConveyor();
+        subsystems.createOverrides();
         subsystems.createMonitor();
 
         createPowerMonitor();

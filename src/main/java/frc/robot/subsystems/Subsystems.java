@@ -15,6 +15,7 @@ import org.strongback.components.Clock;
 import org.strongback.components.Gyroscope;
 import org.strongback.components.Motor;
 import org.strongback.components.PneumaticsModule;
+import org.strongback.components.Solenoid;
 import org.strongback.components.ui.InputDevice;
 import org.strongback.hardware.Hardware;
 import org.strongback.mock.Mock;
@@ -30,6 +31,9 @@ public class Subsystems implements DashboardUpdater, LogHelper {
     public LEDStrip ledStrip;
     public Location location;
     public Drivebase drivebase;
+    public Conveyor conveyor;
+    public Conveyor hwConveyor; // Keep track of the real hardware for dashboard update
+    public OverridableSubsystem<Conveyor> conveyorOverride;
     public PneumaticsModule pcm;
     public Monitor monitor;
     public InputDevice gamepad;
@@ -39,11 +43,16 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         this.gamepad = gamepad;
     }
 
+    public void createOverrides() {
+        createConveyorOverride();
+    }
+
     public void enable() {
         info("Enabling subsystems");
         gamepad.setRumbleLeft(0);
         gamepad.setRumbleRight(0);
         drivebase.enable();
+        hwConveyor.enable();
     }
 
     public void disable() {
@@ -51,12 +60,14 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         gamepad.setRumbleLeft(0);
         gamepad.setRumbleRight(0);
         drivebase.disable();
+        hwConveyor.disable();
     }
 
     @Override
     public void updateDashboard() {
         drivebase.updateDashboard();
         location.updateDashboard();
+        hwConveyor.updateDashboard();
     }
 
     /**
@@ -118,6 +129,28 @@ public class Subsystems implements DashboardUpdater, LogHelper {
     public void setLEDFinalCountdown(double time) {
         ledStrip.setProgressColour(LEDColour.RED, LEDColour.GREEN,
                 1 - (time / Config.ledStrip.countdown));
+    }
+
+    public void createConveyor() {
+        if (!Config.conveyor.present) {
+            conveyor = hwConveyor = new MockConveyor();
+            debug("Created a mock conveyor!");
+            return;
+        }
+
+        Motor motor = MotorFactory.getConveyorMotor();
+        conveyor = hwConveyor = new ConveyorImpl(motor);
+        Strongback.executor().register(conveyor, Priority.LOW);
+    }
+
+    public void createConveyorOverride() {
+        // Setup the diagBox so that it can take control.
+        MockConveyor simulator = new MockConveyor(); // Nothing to simulate, use the mock
+        MockConveyor mock = new MockConveyor();
+        conveyorOverride =
+                new OverridableSubsystem<Conveyor>("conveyor", Conveyor.class, conveyor, simulator,
+                        mock);
+        conveyor = conveyorOverride.getNormalInterface();
     }
 
     /**

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import org.strongback.components.Solenoid.Position;
 
 /**
  * A single step in a Sequence. This step needs to be completely applied before the Sequence can

@@ -82,6 +82,18 @@ public class MotorFactory {
         }
     }
 
+    public static HardwareTalonSRX getConveyorMotor() {
+        HardwareTalonSRX motor =
+                getTalon("conveyor", Config.conveyor.canID, true, NeutralMode.Coast,
+                        Config.conveyor.pidf);
+        // TODO: scale + ramp rate
+        motor.configClosedloopRamp(0, 10);
+        motor.configContinuousCurrentLimit(Config.conveyor.contCurrent, 10);
+        motor.configPeakCurrentLimit(Config.conveyor.peakCurrent, 10);
+        motor.configPeakCurrentDuration(Config.conveyor.peakCurrentDuration, 10);
+        return motor;
+    }
+
     /**
      * Code to allow us to log output current per Spark MAX and set up followers so that
      * it appears as a single motor but can be an arbitary number of motors configured

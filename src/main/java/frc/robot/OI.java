@@ -15,6 +15,7 @@ import org.strongback.Strongback;
 import org.strongback.SwitchReactor;
 import org.strongback.components.Clock;
 import org.strongback.components.Motor.ControlMode;
+import org.strongback.components.Solenoid.Position;
 import org.strongback.components.Switch;
 import org.strongback.components.ui.*;
 
@@ -64,10 +65,16 @@ public class OI {
     public void configureDiagBox(DiagnosticBox box) {
 
         // Conveyor overrides.
+        OverridableSubsystem<Conveyor> conveyorOverride = subsystems.conveyorOverride;
         // Get the interface that the diag box uses.
+        Conveyor conveyorIF = conveyorOverride.getOverrideInterface();
         // Setup the switch for manual/auto/off modes.
+        mapOverrideSwitch(box, DiagnosticBox.Colour.GREEN, conveyorOverride);
         // While the conveyor speed button is pressed, set the duty cycle. Does not turn
         // off.
+        box.greenButton(1).whileTriggered(() -> conveyorIF
+                .setDutyCycle(box.getGreenPot().read()));
+        box.greenButton(1).onRelease(() -> conveyorIF.setDutyCycle(0));
     }
 
     /**
@@ -162,6 +169,13 @@ public class OI {
      * @param colour the colour of the override switch.
      * @param subsystem the subystem to set the mode on.
      */
+    private void mapOverrideSwitch(DiagnosticBox box, DiagnosticBox.Colour colour,
+            OverridableSubsystem<?> subsystem) {
+        box.overrideSwitch(colour, () -> subsystem.setAutomaticMode(),
+                () -> subsystem.setManualMode(),
+                () -> subsystem.turnOff());
+    }
+
     /**
      * Changes the sequences mapped to buttons depending on a mode. The mode can be
      * enabled or disabled based on a button. An example would be to have an
