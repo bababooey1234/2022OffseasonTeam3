@@ -37,6 +37,7 @@ public class Subsystems implements DashboardUpdater, LogHelper {
     public PneumaticsModule pcm;
     public Monitor monitor;
     public InputDevice gamepad;
+    public Intake intake;
 
     public Subsystems(Clock clock, InputDevice gamepad) {
         this.clock = clock;
@@ -124,6 +125,10 @@ public class Subsystems implements DashboardUpdater, LogHelper {
 
     public void createMonitor() {
         monitor = new MonitorImpl();
+    }
+
+    public void createWheeledIntake(){
+        intake = new WheeledIntake(motor)
     }
 
     public void setLEDFinalCountdown(double time) {

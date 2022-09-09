@@ -51,6 +51,7 @@ public class State {
 
     // Gamepad Rumble
     public Double gamepadRumbleIntensity = null;
+    public Double motorOutput = null;
 
     // Time
     /**
@@ -109,6 +110,12 @@ public class State {
     public State setColour(LEDColour c) {
         ledColour = c;
         domains.add(Domain.LED);
+        return this;
+    }
+
+    public State setMotorOutput(double output) {
+        motorOutput = output;
+        domains.add(Domain.INTAKE);
         return this;
     }
 
