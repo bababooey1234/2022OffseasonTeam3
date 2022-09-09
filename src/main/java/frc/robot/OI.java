@@ -15,7 +15,6 @@ import org.strongback.Strongback;
 import org.strongback.SwitchReactor;
 import org.strongback.components.Clock;
 import org.strongback.components.Motor.ControlMode;
-import org.strongback.components.Solenoid.Position;
 import org.strongback.components.Switch;
 import org.strongback.components.ui.*;
 

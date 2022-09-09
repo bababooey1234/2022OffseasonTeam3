@@ -162,6 +162,18 @@ public class Config {
     }
 
     /**
+     * Intake parameters.
+     * 
+     * A simple one motor intake-outtake system.
+     */
+    public static class intake {
+        public static final boolean present = getBoolean("intake/present", false);
+        // TODO: update default value
+        public static final int canID = getInt("conveyor/canID", 5);
+        public static final PIDF pidf = new PIDF(0, 0, 0, 0);
+    }
+
+    /**
      * Location parameters
      *
      * Tracks current and historical position.

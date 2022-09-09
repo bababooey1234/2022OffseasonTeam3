@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import org.strongback.components.Solenoid.Position;
 
 /**
  * A single step in a Sequence. This step needs to be completely applied before the Sequence can
@@ -51,7 +50,7 @@ public class State {
 
     // Gamepad Rumble
     public Double gamepadRumbleIntensity = null;
-    public Double motorOutput = null;
+    public Double intakeMotorOutput = null;
 
     // Time
     /**
@@ -114,7 +113,7 @@ public class State {
     }
 
     public State setMotorOutput(double output) {
-        motorOutput = output;
+        intakeMotorOutput = output;
         domains.add(Domain.INTAKE);
         return this;
     }

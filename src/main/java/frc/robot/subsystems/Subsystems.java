@@ -15,7 +15,6 @@ import org.strongback.components.Clock;
 import org.strongback.components.Gyroscope;
 import org.strongback.components.Motor;
 import org.strongback.components.PneumaticsModule;
-import org.strongback.components.Solenoid;
 import org.strongback.components.ui.InputDevice;
 import org.strongback.hardware.Hardware;
 import org.strongback.mock.Mock;
@@ -54,6 +53,7 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         gamepad.setRumbleRight(0);
         drivebase.enable();
         hwConveyor.enable();
+        intake.enable();
     }
 
     public void disable() {
@@ -62,6 +62,7 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         gamepad.setRumbleRight(0);
         drivebase.disable();
         hwConveyor.disable();
+        intake.disable();
     }
 
     @Override
@@ -69,6 +70,7 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         drivebase.updateDashboard();
         location.updateDashboard();
         hwConveyor.updateDashboard();
+        intake.updateDashboard();
     }
 
     /**
@@ -127,10 +129,6 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         monitor = new MonitorImpl();
     }
 
-    public void createWheeledIntake(){
-        intake = new WheeledIntake(motor)
-    }
-
     public void setLEDFinalCountdown(double time) {
         ledStrip.setProgressColour(LEDColour.RED, LEDColour.GREEN,
                 1 - (time / Config.ledStrip.countdown));
@@ -156,6 +154,17 @@ public class Subsystems implements DashboardUpdater, LogHelper {
                 new OverridableSubsystem<Conveyor>("conveyor", Conveyor.class, conveyor, simulator,
                         mock);
         conveyor = conveyorOverride.getNormalInterface();
+    }
+
+    public void createWheeledIntake() {
+        if (!Config.intake.present) {
+            intake = new MockIntake();
+            debug("Created a mock intake!");
+            return;
+        }
+
+        Motor motor = MotorFactory.getIntakeMotor();
+        intake = new WheeledIntake(motor);
     }
 
     /**

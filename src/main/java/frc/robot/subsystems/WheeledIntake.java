@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import org.strongback.components.Motor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.interfaces.Intake;
 import frc.robot.lib.Subsystem;
+import frc.robot.lib.chart.Chart;
 
 public class WheeledIntake extends Subsystem implements Intake {
     private Motor motor;
@@ -13,6 +15,8 @@ public class WheeledIntake extends Subsystem implements Intake {
         super("WheeledIntake");
         this.motor = motor;
         this.enabled = true;
+
+        Chart.register(() -> currentOutput, "%s/outputDutyCycle");
     }
 
     @Override
@@ -55,5 +59,13 @@ public class WheeledIntake extends Subsystem implements Intake {
     @Override
     public double getMotorOutput() {
         return currentOutput;
+    }
+
+    /**
+     * Update the operator console with the status of the hatch subsystem.
+     */
+    @Override
+    public void updateDashboard() {
+        SmartDashboard.putNumber("Intake duty cycle", currentOutput);
     }
 }

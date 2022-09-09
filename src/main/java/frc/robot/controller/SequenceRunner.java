@@ -240,6 +240,10 @@ public class SequenceRunner implements LogHelper {
         if (desiredState.conveyorDutyCycle != null) {
             subsystems.conveyor.setDutyCycle(desiredState.conveyorDutyCycle);
         }
+        // Intake
+        if (desiredState.intakeMotorOutput != null) {
+            subsystems.intake.setMotorOutput(desiredState.intakeMotorOutput);
+        }
         // LED
         if (desiredState.ledColour != null) {
             subsystems.ledStrip.setColour(desiredState.ledColour);

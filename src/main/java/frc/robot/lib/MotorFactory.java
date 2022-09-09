@@ -94,6 +94,11 @@ public class MotorFactory {
         return motor;
     }
 
+    public static HardwareSparkMAX getIntakeMotor() {
+        return getSparkMAX("intake", Config.intake.canID, true, NeutralMode.Brake,
+                Config.intake.pidf);
+    }
+
     /**
      * Code to allow us to log output current per Spark MAX and set up followers so that
      * it appears as a single motor but can be an arbitary number of motors configured
