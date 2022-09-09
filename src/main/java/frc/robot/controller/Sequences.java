@@ -119,9 +119,27 @@ public class Sequences {
         return builder.build();
     }
 
+    public static Sequence startIntaking() {
+        SequenceBuilder builder = new SequenceBuilder("start Intaking");
+        builder.then().setMotorOutput(1);
+        return builder.build();
+    }
+
+    public static Sequence stopIntaking() {
+        SequenceBuilder builder = new SequenceBuilder("start Intaking");
+        builder.then().setMotorOutput(0);
+        return builder.build();
+    }
+
+    public static Sequence startOuttaking() {
+        SequenceBuilder builder = new SequenceBuilder("start Intaking");
+        builder.then().setMotorOutput(-1);
+        return builder.build();
+    }
+
     // For testing. Needs to be at the end of the file.
     public static Sequence[] allSequences = new Sequence[] {
             getEmptySequence(), getStartSequence(), getResetSequence(),
-            startConveyor(), reverseConveyor()
+            startConveyor(), reverseConveyor(), startIntaking(), stopIntaking(), startOuttaking()
     };
 }

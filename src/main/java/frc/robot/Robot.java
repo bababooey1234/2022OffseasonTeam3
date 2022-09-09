@@ -104,6 +104,7 @@ public class Robot extends TimedRobot implements Executable, LogHelper {
         subsystems.createDrivebase();
         subsystems.createLocation();
         subsystems.createMonitor();
+        subsystems.createWheeledIntake();
 
         createPowerMonitor();
         createCameraServers();

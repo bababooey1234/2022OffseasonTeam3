@@ -17,6 +17,6 @@ package frc.robot.controller;
  * going to conflict with each other.
  */
 enum Domain {
-    DRIVEBASE, CONVEYOR, LED
+    DRIVEBASE, CONVEYOR, LED, INTAKE
     // Note the lack of non-subsystems, eg time.
 };

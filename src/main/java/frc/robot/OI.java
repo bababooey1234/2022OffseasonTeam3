@@ -38,9 +38,12 @@ public class OI {
     public void configureDriverJoysticks(FlightStick left, FlightStick right) {
 
         left.button(3).onPress(run(Sequences.constantDrivePower(-0.22)));
-
+        left.trigger().onPress(run(Sequences.startOuttaking()));
+        left.trigger().onRelease(run(Sequences.stopIntaking()));
         // Arcade
         right.button(3).onPress(run(Sequences.setDrivebaseToDefault()));
+        right.trigger().onPress(run(Sequences.startIntaking()));
+        right.trigger().onRelease(run(Sequences.stopIntaking()));
 
     }
 
