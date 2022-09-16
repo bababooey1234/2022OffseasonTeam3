@@ -16,7 +16,7 @@ public class WheeledIntake extends Subsystem implements Intake {
         this.motor = motor;
         this.enabled = true;
 
-        Chart.register(() -> currentOutput, "%s/outputDutyCycle");
+        Chart.register(() -> currentOutput, "%s/outputDutyCycle", name);
     }
 
     @Override

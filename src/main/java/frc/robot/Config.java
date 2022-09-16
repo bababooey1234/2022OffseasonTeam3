@@ -40,7 +40,7 @@ public class Config {
      * Six wheel drop centre with 6" wheels.
      */
     public static class drivebase {
-        public static final boolean present = getBoolean("drivebase/present", false);
+        public static final boolean present = getBoolean("drivebase/present", true);
         public static final String motorControllerType =
                 getMotorControllerType("drivebase/motorControllerType",
                         motorController.defaultType);
@@ -149,7 +149,7 @@ public class Config {
     public static class conveyor {
         public static final boolean present = getBoolean("conveyor/present", false);
 
-        public static final int canID = getInt("conveyor/canID", 5);
+        public static final int canID = getInt("conveyor/canID", 6);
         public static final PIDF pidf = new PIDF(0.0, 0.0, 0.0, 0.0);
         public static final double dutyCycle = getDouble("conveyor/dutyCycle", 1.0);
         public static final double ejectSingleDutyCycle =
@@ -167,7 +167,7 @@ public class Config {
      * A simple one motor intake-outtake system.
      */
     public static class intake {
-        public static final boolean present = getBoolean("intake/present", false);
+        public static final boolean present = getBoolean("intake/present", true);
         // TODO: update default value
         public static final int canID = getInt("conveyor/canID", 5);
         public static final PIDF pidf = new PIDF(0, 0, 0, 0);
