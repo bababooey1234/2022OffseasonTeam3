@@ -34,8 +34,24 @@ public class Auto implements LogHelper {
 
     private void addAutoSequences() {
         autoProgram.setDefaultOption("Nothing", Sequences.getEmptySequence());
-        add2Ball();
-        add3Ball();
+        // add2Ball();
+        // add3Ball();
+        for (double seconds = 0.5; seconds <= 3; seconds += 0.5)
+            for (double speed = -0.1; speed >= -1; speed -= 0.1)
+                addSecondsBackwards(seconds, speed);
+    }
+
+    private void addSecondsBackwards(double seconds, double speed) {
+        SequenceBuilder builder =
+                new SequenceBuilder(Double.toString(seconds) + " Seconds Backwards @ "
+                        + Double.toString(speed));
+        builder.then().setDrivebaseSpeed(-1);
+        builder.then().setDelayDelta(seconds);
+        builder.then().setDrivebaseSpeed(0);
+        builder.then().doDefaultDrive();
+        autoProgram.addOption(
+                Double.toString(seconds) + " Seconds Backwards @ " + Double.toString(speed),
+                builder.build());
     }
 
     private void add2Ball() {
