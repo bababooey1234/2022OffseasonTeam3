@@ -52,7 +52,7 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         gamepad.setRumbleLeft(0);
         gamepad.setRumbleRight(0);
         drivebase.enable();
-        hwConveyor.enable();
+        // hwConveyor.enable();
         intake.enable();
     }
 
@@ -61,7 +61,7 @@ public class Subsystems implements DashboardUpdater, LogHelper {
         gamepad.setRumbleLeft(0);
         gamepad.setRumbleRight(0);
         drivebase.disable();
-        hwConveyor.disable();
+        // hwConveyor.disable();
         intake.disable();
     }
 
