@@ -37,7 +37,7 @@ public class OI {
      */
     public void configureDriverJoysticks(FlightStick left, FlightStick right) {
 
-        left.button(3).onPress(run(Sequences.constantDrivePower(-0.22)));
+        // left.button(3).onPress(run(Sequences.constantDrivePower(-0.22)));
         left.trigger().onPress(run(Sequences.startOuttaking()));
         left.trigger().onRelease(run(Sequences.stopIntaking()));
         // Arcade
@@ -100,11 +100,11 @@ public class OI {
                         // Throttle.
                         left.getAxis(1).invert().deadband(Config.ui.joystick.deadbandMinValue)
                                 .squarePreservingSign()
-                                .scale(() -> left.getTrigger().isTriggered() ? 0.36 : 1),
+                                .scale(() -> left.getThumb().isTriggered() ? 0.36 : 1),
                         // Turn power.
                         right.getAxis(0).invert().deadband(Config.ui.joystick.deadbandMinValue)
                                 .squarePreservingSign()
-                                .scale(() -> left.getTrigger().isTriggered() ? 0.36 : 1)));
+                                .scale(() -> left.getThumb().isTriggered() ? 0.36 : 1)));
 
         // The old favourite arcade drive with throttling if a button is pressed.
         drivebase.registerDriveRoutine(DriveRoutineType.ARCADE_DUTY_CYCLE,
@@ -112,11 +112,11 @@ public class OI {
                         // Throttle.
                         left.getAxis(1).invert().deadband(Config.ui.joystick.deadbandMinValue)
                                 .squarePreservingSign()
-                                .scale(() -> left.getTrigger().isTriggered() ? 0.36 : 1),
+                                .scale(() -> left.getThumb().isTriggered() ? 0.36 : 1),
                         // Turn power.
                         right.getAxis(0).invert().deadband(Config.ui.joystick.deadbandMinValue)
                                 .squarePreservingSign()
-                                .scale(() -> left.getTrigger().isTriggered() ? 0.36 : 1)));
+                                .scale(() -> left.getThumb().isTriggered() ? 0.36 : 1)));
 
         // The old favourite arcade drive with throttling if a button is pressed but
         // using velocity mode.
@@ -125,11 +125,11 @@ public class OI {
                         // Throttle
                         left.getAxis(1).invert().deadband(Config.ui.joystick.deadbandMinValue)
                                 .squarePreservingSign()
-                                .scale(() -> left.getTrigger().isTriggered() ? 1 : 0.36),
+                                .scale(() -> left.getThumb().isTriggered() ? 1 : 0.36),
                         // Turn power.
                         right.getAxis(0).invert().deadband(Config.ui.joystick.deadbandMinValue)
                                 .squarePreservingSign()
-                                .scale(() -> left.getTrigger().isTriggered() ? 1 : 0.36)));
+                                .scale(() -> left.getThumb().isTriggered() ? 1 : 0.36)));
 
         // DDR!
         if (dancepad.getButtonCount() > 0) {
